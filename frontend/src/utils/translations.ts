@@ -9,7 +9,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "Risk Score",
     detectedIndicators: "Detected Indicators",
     safetyAdvice: "Safety Advice",
-    reportNcrb: "Report to NCRB"
+    reportNcrb: "Report to NCRB",
+    loadMock: "Load Mock Example"
   },
   hi: {
     welcome: "नागरिक धोखाधड़ी शील्ड में आपका स्वागत है! यह जांचने के लिए एक संदिग्ध संदेश पेस्ट करें कि यह एक घोटाला है या नहीं।",
@@ -21,7 +22,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "जोखिम स्कोर",
     detectedIndicators: "पाए गए संकेतक",
     safetyAdvice: "सुरक्षा सलाह",
-    reportNcrb: "NCRB को रिपोर्ट करें"
+    reportNcrb: "NCRB को रिपोर्ट करें",
+    loadMock: "मॉक उदाहरण लोड करें"
   },
   ta: {
     welcome: "சிட்டிசன் ஃப்ராட் ஷீல்டுக்கு வரவேற்கிறோம்! இது மோசடியா என்பதைச் சரிபார்க்க சந்தேகத்திற்குரிய செய்தியை ஒட்டவும்.",
@@ -33,7 +35,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "ஆபத்து மதிப்பெண்",
     detectedIndicators: "கண்டறியப்பட்ட குறிகாட்டிகள்",
     safetyAdvice: "பாதுகாப்பு ஆலோசனை",
-    reportNcrb: "NCRB க்கு புகாரளிக்கவும்"
+    reportNcrb: "NCRB க்கு புகாரளிக்கவும்",
+    loadMock: "மாதிரி உதாரணத்தை ஏற்றவும்"
   },
   te: {
     welcome: "సిటిజన్ ఫ్రాడ్ షీల్డ్‌కు స్వాగతం! ఇది స్కామ్ కాదో తనిఖీ చేయడానికి అనుమానాస్పద సందేశాన్ని అతికించండి.",
@@ -45,7 +48,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "ప్రమాద స్కోర్",
     detectedIndicators: "కనుగొనబడిన సూచికలు",
     safetyAdvice: "భద్రతా సలహా",
-    reportNcrb: "NCRB కి నివేదించండి"
+    reportNcrb: "NCRB కి నివేదించండి",
+    loadMock: "నమూనా ఉదాహరణను లోడ్ చేయండి"
   },
   kn: {
     welcome: "ಸಿಟಿಜನ್ ಫ್ರಾಡ್ ಶೀಲ್ಡ್‌ಗೆ ಸುಸ್ವಾಗತ! ಇದು ಹಗರಣವೇ ಎಂದು ಪರಿಶೀಲಿಸಲು ಅನುಮಾನಾಸ್ಪದ ಸಂದೇಶವನ್ನು ಅಂಟಿಸಿ.",
@@ -57,7 +61,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "ಅಪಾಯದ ಸ್ಕೋರ್",
     detectedIndicators: "ಪತ್ತೆಯಾದ ಸೂಚಕಗಳು",
     safetyAdvice: "ಸುರಕ್ಷತಾ ಸಲಹೆ",
-    reportNcrb: "NCRB ಗೆ ವರದಿ ಮಾಡಿ"
+    reportNcrb: "NCRB ಗೆ ವರದಿ ಮಾಡಿ",
+    loadMock: "ಅಣಕು ಉದಾಹರಣೆಯನ್ನು ಲೋಡ್ ಮಾಡಿ"
   },
   bn: {
     welcome: "সিটিজেন ফ্রড শিল্ডে স্বাগতম! এটি একটি কেলেঙ্কারী কিনা তা পরীক্ষা করতে একটি সন্দেহজনক বার্তা পেস্ট করুন।",
@@ -69,7 +74,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "ঝুঁকি স্কোর",
     detectedIndicators: "সনাক্ত করা সূচক",
     safetyAdvice: "নিরাপত্তা পরামর্শ",
-    reportNcrb: "NCRB তে রিপোর্ট করুন"
+    reportNcrb: "NCRB তে রিপোর্ট করুন",
+    loadMock: "মক উদাহরণ লোড করুন"
   },
   mr: {
     welcome: "सिटीझन फ्रॉड शील्डमध्ये आपले स्वागत आहे! हा घोटाळा आहे की नाही हे तपासण्यासाठी संशयास्पद संदेश पेस्ट करा.",
@@ -81,7 +87,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "जोखीम स्कोअर",
     detectedIndicators: "शोधलेले निर्देशक",
     safetyAdvice: "सुरक्षा सल्ला",
-    reportNcrb: "NCRB ला तक्रार करा"
+    reportNcrb: "NCRB ला तक्रार करा",
+    loadMock: "मॉक उदाहरण लोड करा"
   },
   gu: {
     welcome: "સિટિઝન ફ્રોડ શીલ્ડમાં તમારું સ્વાગત છે! આ કૌભાંડ છે કે કેમ તે તપાસવા માટે શંકાસ્પદ સંદેશ પેસ્ટ કરો.",
@@ -93,7 +100,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "જોખમ સ્કોર",
     detectedIndicators: "શોધાયેલ સૂચકાંકો",
     safetyAdvice: "સલામતી સલાહ",
-    reportNcrb: "NCRB ને જાણ કરો"
+    reportNcrb: "NCRB ને જાણ કરો",
+    loadMock: "મોક ઉદાહરણ લોડ કરો"
   },
   ml: {
     welcome: "സിറ്റിസൺ ഫ്രോഡ് ഷീൽഡിലേക്ക് സ്വാഗതം! ഇതൊരു തട്ടിപ്പാണോ എന്ന് പരിശോധിക്കാൻ സംശയാസ്പദമായ ഒരു സന്ദേശം പേസ്റ്റ് ചെയ്യുക.",
@@ -105,7 +113,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "റിസ്ക് സ്കോർ",
     detectedIndicators: "കണ്ടെത്തിയ സൂചകങ്ങൾ",
     safetyAdvice: "സുരക്ഷാ ഉപദേശം",
-    reportNcrb: "NCRB യിൽ റിപ്പോർട്ട് ചെയ്യുക"
+    reportNcrb: "NCRB യിൽ റിപ്പോർട്ട് ചെയ്യുക",
+    loadMock: "മോക്ക് ഉദാഹരണം ലോഡ് ചെയ്യുക"
   },
   or: {
     welcome: "ସିଟିଜେନ୍ ଫ୍ରଡ୍ ଶିଲ୍ଡକୁ ସ୍ୱାଗତ! ଏହା ଏକ ସ୍କାମ୍ କି ନୁହେଁ ଯାଞ୍ଚ କରିବାକୁ ଏକ ସନ୍ଦେହଜନକ ମେସେଜ୍ ପେଷ୍ଟ କରନ୍ତୁ।",
@@ -117,7 +126,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "ବିପଦ ସ୍କୋର୍",
     detectedIndicators: "ଚିହ୍ନଟ ହୋଇଥିବା ସୂଚକ",
     safetyAdvice: "ସୁରକ୍ଷା ପରାମର୍ଶ",
-    reportNcrb: "NCRB ରେ ରିପୋର୍ଟ କରନ୍ତୁ"
+    reportNcrb: "NCRB ରେ ରିପୋର୍ଟ କରନ୍ତୁ",
+    loadMock: "ମକ୍ ଉଦାହରଣ ଲୋଡ୍ କରନ୍ତୁ"
   },
   pa: {
     welcome: "ਸਿਟੀਜ਼ਨ ਫਰਾਡ ਸ਼ੀਲਡ ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ! ਇਹ ਜਾਂਚ ਕਰਨ ਲਈ ਕਿ ਕੀ ਇਹ ਇੱਕ ਘੁਟਾਲਾ ਹੈ, ਇੱਕ ਸ਼ੱਕੀ ਸੁਨੇਹਾ ਪੇਸਟ ਕਰੋ।",
@@ -129,7 +139,8 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "ਜੋਖਮ ਸਕੋਰ",
     detectedIndicators: "ਖੋਜੇ ਗਏ ਸੂਚਕ",
     safetyAdvice: "ਸੁਰੱਖਿਆ ਸਲਾਹ",
-    reportNcrb: "NCRB ਨੂੰ ਰਿਪੋਰਟ ਕਰੋ"
+    reportNcrb: "NCRB ਨੂੰ ਰਿਪੋਰਟ ਕਰੋ",
+    loadMock: "ਮੌਕ ਉਦਾਹਰਨ ਲੋਡ ਕਰੋ"
   },
   as: {
     welcome: "চিটিজেন ফ্ৰড শ্বিল্ডলৈ স্বাগতম! ই এটা কেলেংকাৰী নেকি পৰীক্ষা কৰিবলৈ এটা সন্দেহজনক বাৰ্তা পেষ্ট কৰক।",
@@ -141,6 +152,7 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
     riskScore: "বিপদ স্কোৰ",
     detectedIndicators: "চিনাক্ত কৰা সূচক",
     safetyAdvice: "সুৰক্ষা পৰামৰ্শ",
-    reportNcrb: "NCRB ত ৰিপৰ্ট কৰক"
+    reportNcrb: "NCRB ত ৰিপৰ্ট কৰক",
+    loadMock: "মক উদাহৰণ লোড কৰক"
   }
 };

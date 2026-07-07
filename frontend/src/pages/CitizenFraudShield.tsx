@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Upload, Shield, AlertTriangle, CheckCircle, Loader2, Flag } from 'lucide-react';
+import { Send, Upload, Shield, AlertTriangle, CheckCircle, Loader2, Flag, FileText } from 'lucide-react';
 import { useToast } from '../components/common/Toast';
 import { UI_TRANSLATIONS } from '../utils/translations';
+import { MOCK_SCAMS } from '../utils/mockData';
 
 interface Message {
   id: string;
@@ -161,6 +162,17 @@ export default function CitizenFraudShield() {
               </div>
             </div>
           )}
+        </div>
+
+        <div className="px-4 py-2 bg-navy-800/30 border-t border-white/[0.06] flex items-center justify-between">
+          <button 
+            type="button" 
+            onClick={() => setInput(MOCK_SCAMS[selectedLang] || MOCK_SCAMS['en'])}
+            className="flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            {t.loadMock}
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-4 border-t border-white/[0.06]">
