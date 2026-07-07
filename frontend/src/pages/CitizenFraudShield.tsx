@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Upload, Shield, AlertTriangle, CheckCircle, Loader2, Flag } from 'lucide-react';
 import { useToast } from '../components/common/Toast';
+import { UI_TRANSLATIONS } from '../utils/translations';
 
 interface Message {
   id: string;
@@ -41,15 +42,25 @@ const LANGUAGES = [
 ];
 
 export default function CitizenFraudShield() {
+  const [selectedLang, setSelectedLang] = useState('en');
+  const t = UI_TRANSLATIONS[selectedLang] || UI_TRANSLATIONS['en'];
+
   const [messages, setMessages] = useState<Message[]>([
-    { id: '0', type: 'bot', content: 'Welcome to Citizen Fraud Shield! Paste a suspicious message, or upload a screenshot to check if it\'s a scam.', timestamp: new Date() },
+    { id: '0', type: 'bot', content: t.welcome, timestamp: new Date() },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [verdict, setVerdict] = useState<Verdict | null>(null);
-  const [selectedLang, setSelectedLang] = useState('en');
+
   const chatRef = useRef<HTMLDivElement>(null);
   const toast = useToast();
+
+  // Update welcome message when language changes if no other messages exist
+  useEffect(() => {
+    if (messages.length === 1 && messages[0].id === '0') {
+      setMessages([{ id: '0', type: 'bot', content: t.welcome, timestamp: new Date() }]);
+    }
+  }, [selectedLang]);
 
   useEffect(() => {
     if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -109,8 +120,8 @@ export default function CitizenFraudShield() {
       <div className="lg:col-span-2 glass-card flex flex-col">
         <div className="px-5 py-4 border-b border-white/[0.06] flex justify-between items-center">
           <div>
-            <h3 className="text-body-lg font-semibold text-white">Fraud Advisory Chat</h3>
-            <p className="text-caption text-gray-500">Paste suspicious messages to check for fraud</p>
+            <h3 className="text-body-lg font-semibold text-white">{t.chatTitle}</h3>
+            <p className="text-caption text-gray-500">{t.chatSubtitle}</p>
           </div>
           <select 
             value={selectedLang}
@@ -158,7 +169,7 @@ export default function CitizenFraudShield() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Paste a suspicious message here..."
+              placeholder={t.placeholder}
               className="input-field flex-1"
               disabled={loading}
             />
@@ -171,13 +182,13 @@ export default function CitizenFraudShield() {
 
       {/* Verdict Panel */}
       <div className="glass-card p-5 flex flex-col">
-        <h3 className="text-body-lg font-semibold text-white mb-4">Analysis Verdict</h3>
+        <h3 className="text-body-lg font-semibold text-white mb-4">{t.verdictTitle}</h3>
 
         {!verdict ? (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
               <Shield className="w-12 h-12 text-gray-600 mx-auto mb-3" />
-              <p className="text-body text-gray-500">Submit a message to see the analysis results</p>
+              <p className="text-body text-gray-500">{t.verdictEmpty}</p>
             </div>
           </div>
         ) : vs && (
@@ -186,13 +197,13 @@ export default function CitizenFraudShield() {
               <vs.icon className={`w-8 h-8 ${vs.text}`} />
               <div>
                 <p className={`text-subheading font-bold ${vs.text}`}>{vs.label}</p>
-                <p className="text-caption text-gray-400">Risk Score: {verdict.riskScore}%{verdict.scamCategory && verdict.scamCategory !== 'None' ? ` • ${verdict.scamCategory}` : ''}</p>
+                <p className="text-caption text-gray-400">{t.riskScore}: {verdict.riskScore}%{verdict.scamCategory && verdict.scamCategory !== 'None' ? ` • ${verdict.scamCategory}` : ''}</p>
               </div>
             </div>
 
             {verdict.indicators.length > 0 && (
               <div>
-                <h4 className="text-caption font-semibold text-gray-400 uppercase tracking-wider mb-2">Detected Indicators</h4>
+                <h4 className="text-caption font-semibold text-gray-400 uppercase tracking-wider mb-2">{t.detectedIndicators}</h4>
                 <div className="space-y-1.5">
                   {verdict.indicators.map((ind, i) => (
                     <div key={i} className="flex items-center gap-2 text-caption text-gray-300">
@@ -205,7 +216,7 @@ export default function CitizenFraudShield() {
             )}
 
             <div>
-              <h4 className="text-caption font-semibold text-gray-400 uppercase tracking-wider mb-2">Safety Advice</h4>
+              <h4 className="text-caption font-semibold text-gray-400 uppercase tracking-wider mb-2">{t.safetyAdvice}</h4>
               <div className="space-y-2">
                 {verdict.advice.map((adv, i) => (
                   <p key={i} className="text-caption text-gray-400 flex gap-2">
@@ -217,7 +228,7 @@ export default function CitizenFraudShield() {
 
             {verdict.verdict !== 'safe' && (
               <button onClick={reportToNCRB} className="btn-danger w-full flex items-center justify-center gap-2 mt-2">
-                <Flag className="w-4 h-4" /> Report to NCRB
+                <Flag className="w-4 h-4" /> {t.reportNcrb}
               </button>
             )}
           </motion.div>
