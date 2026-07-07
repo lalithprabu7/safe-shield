@@ -527,18 +527,73 @@ export async function analyzeMessage(message: string, lang: string = 'en'): Prom
 
   // Explanation
   let explanation: string;
-  if (verdict === 'high_risk') {
-    explanation = `ML Model analysis strongly indicates a ${scamCategory} attempt. Probability score: ${riskScore}%. Recommended: Do NOT respond to this message.`;
-  } else if (verdict === 'suspicious') {
-    explanation = `ML Model analysis shows suspicious patterns consistent with ${scamCategory}. Probability score: ${riskScore}%. Exercise caution.`;
-  } else {
-    explanation = `The NLP model classified this message as safe. Risk score: ${riskScore}%. However, always exercise standard caution.`;
-  }
+  const t: Record<string, Record<string, string>> = {
+    en: {
+      high: `ML Model analysis strongly indicates a ${scamCategory} attempt. Probability score: ${riskScore}%. Recommended: Do NOT respond to this message.`,
+      susp: `ML Model analysis shows suspicious patterns consistent with ${scamCategory}. Probability score: ${riskScore}%. Exercise caution.`,
+      safe: `The NLP model classified this message as safe. Risk score: ${riskScore}%. However, always exercise standard caution.`
+    },
+    hi: {
+      high: `एमएल मॉडल विश्लेषण एक ${scamCategory} प्रयास का दृढ़ता से संकेत देता है। जोखिम स्कोर: ${riskScore}%. सुझाव: इस संदेश का उत्तर न दें।`,
+      susp: `एमएल मॉडल विश्लेषण ${scamCategory} के अनुरूप संदिग्ध पैटर्न दिखाता है। जोखिम स्कोर: ${riskScore}%. सावधानी बरतें।`,
+      safe: `एनएलपी मॉडल ने इस संदेश को सुरक्षित वर्गीकृत किया है। जोखिम स्कोर: ${riskScore}%. हालाँकि, हमेशा मानक सावधानी बरतें।`
+    },
+    ta: {
+      high: `ML மாதிரி பகுப்பாய்வு ஒரு ${scamCategory} முயற்சியை வலுவாகக் குறிக்கிறது. ஆபத்து மதிப்பெண்: ${riskScore}%. பரிந்துரைக்கப்படுகிறது: இந்த செய்திக்கு பதிலளிக்க வேண்டாம்.`,
+      susp: `ML மாதிரி பகுப்பாய்வு ${scamCategory} உடன் ஒத்துப்போகும் சந்தேகத்திற்குரிய வடிவங்களைக் காட்டுகிறது. ஆபத்து மதிப்பெண்: ${riskScore}%. எச்சரிக்கையுடன் செயல்படவும்.`,
+      safe: `NLP மாதிரி இந்த செய்தியை பாதுகாப்பானது என வகைப்படுத்தியுள்ளது. ஆபத்து மதிப்பெண்: ${riskScore}%. இருப்பினும், எப்போதும் எச்சரிக்கையுடன் இருக்கவும்.`
+    },
+    te: {
+      high: `ML మోడల్ విశ్లేషణ ఇది ${scamCategory} ప్రయత్నం అని బలంగా సూచిస్తోంది. ప్రమాద స్కోర్: ${riskScore}%. సిఫార్సు: ఈ సందేశానికి ప్రతిస్పందించవద్దు.`,
+      susp: `ML మోడల్ విశ్లేషణ ${scamCategory} కు అనుగుణంగా అనుమానాస్పద నమూనాలను చూపుతుంది. ప్రమాద స్కోర్: ${riskScore}%. జాగ్రత్త వహించండి.`,
+      safe: `ఈ సందేశం సురక్షితమైనదని NLP మోడల్ వర్గీకరించింది. ప్రమాద స్కోర్: ${riskScore}%. అయినప్పటికీ, ఎల్లప్పుడూ జాగ్రత్త వహించండి.`
+    },
+    kn: {
+      high: `ML ಮಾದರಿ ವಿಶ್ಲೇಷಣೆಯು ${scamCategory} ಪ್ರಯತ್ನವನ್ನು ಬಲವಾಗಿ ಸೂಚಿಸುತ್ತದೆ. ಅಪಾಯದ ಸ್ಕೋರ್: ${riskScore}%. ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ: ಈ ಸಂದೇಶಕ್ಕೆ ಪ್ರತಿಕ್ರಿಯಿಸಬೇಡಿ.`,
+      susp: `ML ಮಾದರಿ ವಿಶ್ಲೇಷಣೆಯು ${scamCategory} ಗೆ ಅನುಗುಣವಾಗಿ ಅನುಮಾನಾಸ್ಪದ ಮಾದರಿಗಳನ್ನು ತೋರಿಸುತ್ತದೆ. ಅಪಾಯದ ಸ್ಕೋರ್: ${riskScore}%. ಎಚ್ಚರಿಕೆ ವಹಿಸಿ.`,
+      safe: `NLP ಮಾದರಿಯು ಈ ಸಂದೇಶವನ್ನು ಸುರಕ್ಷಿತ ಎಂದು ವರ್ಗೀಕರಿಸಿದೆ. ಅಪಾಯದ ಸ್ಕೋರ್: ${riskScore}%. ಆದಾಗ್ಯೂ, ಯಾವಾಗಲೂ ಎಚ್ಚರಿಕೆ ವಹಿಸಿ.`
+    },
+    bn: {
+      high: `ML মডেল বিশ্লেষণ জোরালোভাবে একটি ${scamCategory} প্রচেষ্টার ইঙ্গিত দেয়। ঝুঁকি স্কোর: ${riskScore}%. প্রস্তাবিত: এই বার্তার উত্তর দেবেন না।`,
+      susp: `ML মডেল বিশ্লেষণ ${scamCategory} এর সাথে সামঞ্জস্যপূর্ণ সন্দেহজনক নিদর্শন দেখায়। ঝুঁকি স্কোর: ${riskScore}%. সতর্কতা অবলম্বন করুন।`,
+      safe: `NLP মডেল এই বার্তাকে নিরাপদ বলে শ্রেণীবদ্ধ করেছে। ঝুঁকি স্কোর: ${riskScore}%. যাইহোক, সর্বদা সতর্কতা অবলম্বন করুন।`
+    },
+    mr: {
+      high: `एमएल मॉडेल विश्लेषण ${scamCategory} प्रयत्नाचे जोरदार संकेत देते. जोखीम स्कोअर: ${riskScore}%. शिफारस: या संदेशाला उत्तर देऊ नका.`,
+      susp: `एमएल मॉडेल विश्लेषण ${scamCategory} शी सुसंगत संशयास्पद पॅटर्न दर्शवते. जोखीम स्कोअर: ${riskScore}%. काळजी घ्या.`,
+      safe: `एनएलपी मॉडेलने हा संदेश सुरक्षित म्हणून वर्गीकृत केला आहे. जोखीम स्कोअर: ${riskScore}%. तथापि, नेहमी मानक काळजी घ्या.`
+    },
+    gu: {
+      high: `ML મોડલ વિશ્લેષણ ભારપૂર્વક ${scamCategory} પ્રયાસ સૂચવે છે. જોખમ સ્કોર: ${riskScore}%. ભલામણ: આ સંદેશનો જવાબ આપશો નહીં.`,
+      susp: `ML મોડલ વિશ્લેષણ ${scamCategory} સાથે સુસંગત શંકાસ્પદ પેટર્ન દર્શાવે છે. જોખમ સ્કોર: ${riskScore}%. સાવચેતી રાખો.`,
+      safe: `NLP મોડલે આ સંદેશને સુરક્ષિત તરીકે વર્ગીકૃત કર્યો છે. જોખમ સ્કોર: ${riskScore}%. જો કે, હંમેશા પ્રમાણભૂત સાવચેતી રાખો.`
+    },
+    ml: {
+      high: `ML മോഡൽ വിശകലനം ${scamCategory} ശ്രമത്തെ ശക്തമായി സൂചിപ്പിക്കുന്നു. റിസ്ക് സ്കോർ: ${riskScore}%. ശുപാർശ ചെയ്യുന്നത്: ഈ സന്ദേശത്തോട് പ്രതികരിക്കരുത്.`,
+      susp: `ML മോഡൽ വിശകലനം ${scamCategory} യുമായി പൊരുത്തപ്പെടുന്ന സംശയാസ്പദമായ പാറ്റേണുകൾ കാണിക്കുന്നു. റിസ്ക് സ്കോർ: ${riskScore}%. ജാഗ്രത പാലിക്കുക.`,
+      safe: `NLP മോഡൽ ഈ സന്ദേശത്തെ സുരക്ഷിതമായി തരംതിരിച്ചു. റിസ്ക് സ്കോർ: ${riskScore}%. എന്നിരുന്നാലും, എപ്പോഴും ജാഗ്രത പാലിക്കുക.`
+    },
+    or: {
+      high: `ML ମଡେଲ୍ ବିଶ୍ଳେଷଣ ଦୃଢ଼ ଭାବରେ ${scamCategory} ପ୍ରୟାସକୁ ସୂଚାଉଛି। ବିପଦ ସ୍କୋର୍: ${riskScore}%. ସୁପାରିଶ: ଏହି ମେସେଜ୍ ର ଉତ୍ତର ଦିଅନ୍ତୁ ନାହିଁ।`,
+      susp: `ML ମଡେଲ୍ ବିଶ୍ଳେଷଣ ${scamCategory} ସହିତ ସମାନ ସନ୍ଦେହଜନକ ପ୍ୟାଟର୍ଣ୍ଣ ଦେଖାଉଛି। ବିପଦ ସ୍କୋର୍: ${riskScore}%. ସତର୍କ ରୁହନ୍ତୁ।`,
+      safe: `NLP ମଡେଲ୍ ଏହି ମେସେଜ୍ କୁ ସୁରକ୍ଷିତ ବୋଲି ଶ୍ରେଣୀଭୁକ୍ତ କରିଛି। ବିପଦ ସ୍କୋର୍: ${riskScore}%. ତଥାପି, ସର୍ବଦା ସତର୍କ ରୁହନ୍ତୁ।`
+    },
+    pa: {
+      high: `ਐਮਐਲ ਮਾਡਲ ਵਿਸ਼ਲੇਸ਼ਣ ਜ਼ੋਰਦਾਰ ਢੰਗ ਨਾਲ ਇੱਕ ${scamCategory} ਕੋਸ਼ਿਸ਼ ਨੂੰ ਦਰਸਾਉਂਦਾ ਹੈ। ਜੋਖਮ ਸਕੋਰ: ${riskScore}%. ਸਿਫਾਰਸ਼: ਇਸ ਸੁਨੇਹੇ ਦਾ ਜਵਾਬ ਨਾ ਦਿਓ।`,
+      susp: `ਐਮਐਲ ਮਾਡਲ ਵਿਸ਼ਲੇਸ਼ਣ ${scamCategory} ਦੇ ਅਨੁਕੂਲ ਸ਼ੱਕੀ ਪੈਟਰਨ ਦਿਖਾਉਂਦਾ ਹੈ। ਜੋਖਮ ਸਕੋਰ: ${riskScore}%. ਸਾਵਧਾਨੀ ਵਰਤੋ।`,
+      safe: `ਐਨਐਲਪੀ ਮਾਡਲ ਨੇ ਇਸ ਸੁਨੇਹੇ ਨੂੰ ਸੁਰੱਖਿਅਤ ਦਰਜਾ ਦਿੱਤਾ ਹੈ। ਜੋਖਮ ਸਕੋਰ: ${riskScore}%. ਹਾਲਾਂਕਿ, ਹਮੇਸ਼ਾ ਸਾਵਧਾਨ ਰਹੋ।`
+    },
+    as: {
+      high: `ML আৰ্হি বিশ্লেষণে দৃঢ়ভাৱে এটা ${scamCategory} প্ৰচেষ্টাৰ ইংগিত দিয়ে। বিপদ স্কোৰ: ${riskScore}%. পৰামৰ্শ: এই বাৰ্তাৰ উত্তৰ নিদিব।`,
+      susp: `ML আৰ্হি বিশ্লেষণে ${scamCategory} ৰ সৈতে সংগতিপূৰ্ণ সন্দেহজনক আৰ্হি দেখুৱায়। বিপদ স্কোৰ: ${riskScore}%. সাৱধান হওক।`,
+      safe: `NLP আৰ্হিয়ে এই বাৰ্তাটোক নিৰাপদ বুলি শ্ৰেণীভুক্ত কৰিছে। বিপদ স্কোৰ: ${riskScore}%. অৱশ্যে, সদায় সাৱধান হওক।`
+    }
+  };
 
-  // Handle language tag
-  if (lang !== 'en') {
-    explanation = `[${lang.toUpperCase()}]: ${explanation}`;
-  }
+  const selLang = t[lang] ? lang : 'en';
+  if (verdict === 'high_risk') explanation = t[selLang].high;
+  else if (verdict === 'suspicious') explanation = t[selLang].susp;
+  else explanation = t[selLang].safe;
 
   // Advice
   const advice = ADVICE_DB[scamCategory] || ADVICE_DB['default'];
