@@ -25,6 +25,21 @@ const VERDICT_STYLES = {
   high_risk: { bg: 'bg-danger/15', border: 'border-danger/30', text: 'text-danger', icon: AlertTriangle, label: 'High Risk' },
 };
 
+const LANGUAGES = [
+  { code: 'en', label: 'English', native: 'English' },
+  { code: 'hi', label: 'Hindi', native: 'हिंदी' },
+  { code: 'ta', label: 'Tamil', native: 'தமிழ்' },
+  { code: 'te', label: 'Telugu', native: 'తెలుగు' },
+  { code: 'kn', label: 'Kannada', native: 'ಕನ್ನಡ' },
+  { code: 'bn', label: 'Bengali', native: 'বাংলা' },
+  { code: 'mr', label: 'Marathi', native: 'मराठी' },
+  { code: 'gu', label: 'Gujarati', native: 'ગુજરાતી' },
+  { code: 'ml', label: 'Malayalam', native: 'മലയാളം' },
+  { code: 'or', label: 'Odia', native: 'ଓଡ଼ିଆ' },
+  { code: 'pa', label: 'Punjabi', native: 'ਪੰਜਾਬੀ' },
+  { code: 'as', label: 'Assamese', native: 'অসমীয়া' },
+];
+
 export default function CitizenFraudShield() {
   const [messages, setMessages] = useState<Message[]>([
     { id: '0', type: 'bot', content: 'Welcome to Citizen Fraud Shield! Paste a suspicious message, or upload a screenshot to check if it\'s a scam.', timestamp: new Date() },
@@ -32,6 +47,7 @@ export default function CitizenFraudShield() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [verdict, setVerdict] = useState<Verdict | null>(null);
+  const [selectedLang, setSelectedLang] = useState('en');
   const chatRef = useRef<HTMLDivElement>(null);
   const toast = useToast();
 
@@ -50,7 +66,8 @@ export default function CitizenFraudShield() {
       const resp = await fetch('/api/chat/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text }),
+        // We pass the lang so the backend could potentially translate the advisory response
+        body: JSON.stringify({ message: text, lang: selectedLang }),
       });
       if (!resp.ok) throw new Error('Analysis failed');
       const data: Verdict = await resp.json();
@@ -90,9 +107,20 @@ export default function CitizenFraudShield() {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 h-[calc(100vh-8rem)]">
       {/* Chat Panel */}
       <div className="lg:col-span-2 glass-card flex flex-col">
-        <div className="px-5 py-4 border-b border-white/[0.06]">
-          <h3 className="text-body-lg font-semibold text-white">Fraud Advisory Chat</h3>
-          <p className="text-caption text-gray-500">Paste suspicious messages to check for fraud</p>
+        <div className="px-5 py-4 border-b border-white/[0.06] flex justify-between items-center">
+          <div>
+            <h3 className="text-body-lg font-semibold text-white">Fraud Advisory Chat</h3>
+            <p className="text-caption text-gray-500">Paste suspicious messages to check for fraud</p>
+          </div>
+          <select 
+            value={selectedLang}
+            onChange={(e) => setSelectedLang(e.target.value)}
+            className="bg-navy-700/50 border border-white/10 text-gray-300 text-caption rounded-lg px-3 py-2 outline-none focus:border-accent transition-colors"
+          >
+            {LANGUAGES.map(l => (
+              <option key={l.code} value={l.code}>{l.native} ({l.label})</option>
+            ))}
+          </select>
         </div>
 
         <div ref={chatRef} className="flex-1 overflow-y-auto p-5 space-y-4">

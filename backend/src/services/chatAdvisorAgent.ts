@@ -462,7 +462,7 @@ const ADVICE_DB: Record<string, string[]> = {
   ],
 };
 
-export async function analyzeMessage(message: string): Promise<ChatAnalysisResult> {
+export async function analyzeMessage(message: string, lang: string = 'en'): Promise<ChatAnalysisResult> {
   // Ensure model is initialized (fallback check)
   if (!classifier) {
     await initNLPModel();
@@ -533,6 +533,11 @@ export async function analyzeMessage(message: string): Promise<ChatAnalysisResul
     explanation = `ML Model analysis shows suspicious patterns consistent with ${scamCategory}. Probability score: ${riskScore}%. Exercise caution.`;
   } else {
     explanation = `The NLP model classified this message as safe. Risk score: ${riskScore}%. However, always exercise standard caution.`;
+  }
+
+  // Handle language tag
+  if (lang !== 'en') {
+    explanation = `[${lang.toUpperCase()}]: ${explanation}`;
   }
 
   // Advice
