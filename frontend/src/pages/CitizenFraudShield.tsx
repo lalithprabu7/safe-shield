@@ -164,16 +164,18 @@ export default function CitizenFraudShield() {
           )}
         </div>
 
-        <div className="px-4 py-2 bg-navy-800/30 border-t border-white/[0.06] flex items-center justify-between">
-          <button 
-            type="button" 
-            onClick={() => setInput(MOCK_SCAMS[selectedLang] || MOCK_SCAMS['en'])}
-            className="flex items-center gap-1.5 text-xs text-accent hover:text-accent-hover transition-colors"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            {t.loadMock}
-          </button>
-        </div>
+        {messages.length === 1 && (
+          <div className="px-4 py-3 bg-navy-800/30 border-t border-white/[0.06]">
+            <p className="text-caption text-gray-400 mb-2">Try an example:</p>
+            <button 
+              type="button" 
+              onClick={() => analyzeMessage(MOCK_SCAMS[selectedLang] || MOCK_SCAMS['en'])}
+              className="text-left text-sm text-gray-300 bg-navy-900/50 hover:bg-navy-700 p-3 rounded-lg border border-white/10 transition-colors w-full"
+            >
+              "{MOCK_SCAMS[selectedLang] || MOCK_SCAMS['en']}"
+            </button>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="p-4 border-t border-white/[0.06]">
           <div className="flex gap-2">
