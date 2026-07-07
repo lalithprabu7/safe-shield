@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(uuid())
+  name           String
+  email          String   @unique
+  hashedPassword String
+  role           String
+  createdAt      DateTime @default(now())
+}
+
+model Case {
+  id         String   @id @default(uuid())
+  title      String
+  timestamp  DateTime @default(now())
+  type       String
+  riskScore  Float
+  status     String
+  transcript String?
+  patterns   String?  // JSON string
+  phone      String?
+  duration   String?
+  amount     Float?
+  createdBy  String?
+}
+
+model VoIPIntercept {
+  id           String   @id @default(uuid())
+  phone        String
+  status       String
+  timeReceived DateTime @default(now())
+  details      String?  // JSON string
+}

@@ -1,0 +1,116 @@
+{
+  "transcripts": [
+    {
+      "id": "TR-001",
+      "title": "CBI Impersonation - Digital Arrest",
+      "riskLevel": "critical",
+      "words": [
+        "Hello,", "this", "is", "Senior", "Inspector", "Rajesh", "Kumar",
+        "calling", "from", "the", "Central", "Bureau", "of", "Investigation,", "CBI.",
+        "We", "have", "received", "credible", "intelligence", "that", "your",
+        "Aadhaar", "number", "ending", "in", "4378", "has", "been", "directly",
+        "linked", "to", "multiple", "cases", "of", "international", "money", "laundering",
+        "and", "hawala", "transactions.", "A", "First", "Information", "Report",
+        "has", "been", "registered", "against", "your", "name,", "FIR", "number",
+        "CBI-2024-MC-7829.", "An", "arrest", "warrant", "has", "been", "issued",
+        "by", "the", "High", "Court.", "You", "are", "required", "to", "stay",
+        "on", "this", "video", "call", "while", "we", "verify", "your", "identity.",
+        "Do", "not", "disconnect", "this", "call", "under", "any", "circumstances.",
+        "If", "you", "disconnect,", "the", "arrest", "warrant", "will", "be",
+        "executed", "immediately.", "You", "must", "not", "inform", "anyone",
+        "about", "this", "ongoing", "investigation.", "For", "the", "safety",
+        "of", "your", "funds,", "you", "will", "need", "to", "transfer", "all",
+        "your", "savings", "to", "a", "safe", "account", "provided", "by", "the",
+        "Reserve", "Bank", "of", "India.", "This", "is", "a", "mandatory",
+        "verification", "process.", "Failure", "to", "comply", "will", "result",
+        "in", "immediate", "arrest", "and", "seizure", "of", "all", "your", "assets."
+      ]
+    },
+    {
+      "id": "TR-002",
+      "title": "Mumbai Customs - Package Interception",
+      "riskLevel": "high",
+      "words": [
+        "Sir,", "this", "is", "calling", "from", "Mumbai", "Customs", "Department.",
+        "A", "parcel", "registered", "under", "your", "name", "and", "passport",
+        "number", "has", "been", "intercepted", "at", "Mumbai", "International",
+        "Airport.", "The", "package", "contains", "five", "forged", "passports",
+        "and", "illegal", "contraband", "substances.", "This", "is", "a", "very",
+        "serious", "matter", "under", "NDPS", "Act.", "An", "arrest", "warrant",
+        "has", "been", "issued", "in", "your", "name.", "The", "case", "has",
+        "been", "forwarded", "to", "the", "Narcotics", "Control", "Bureau.",
+        "You", "need", "to", "verify", "your", "identity", "immediately", "by",
+        "sharing", "your", "bank", "account", "details", "and", "Aadhaar", "number.",
+        "Do", "not", "disconnect", "this", "call.", "If", "you", "cooperate,",
+        "we", "can", "resolve", "this", "before", "the", "police", "arrive.",
+        "Transfer", "a", "security", "deposit", "to", "the", "government",
+        "verification", "account", "to", "prove", "your", "innocence."
+      ]
+    },
+    {
+      "id": "TR-003",
+      "title": "Legitimate Bank Customer Service",
+      "riskLevel": "safe",
+      "words": [
+        "Hello,", "this", "is", "Priya", "from", "HDFC", "Bank", "customer",
+        "service.", "I", "am", "calling", "regarding", "your", "credit", "card",
+        "ending", "in", "4532.", "We", "noticed", "a", "transaction", "of",
+        "rupees", "twelve", "thousand", "four", "hundred", "fifty", "at", "Amazon",
+        "on", "July", "third.", "Could", "you", "please", "confirm", "if", "you",
+        "made", "this", "purchase?", "If", "not,", "we", "can", "block", "your",
+        "card", "immediately", "and", "initiate", "a", "dispute.", "You", "can",
+        "also", "visit", "your", "nearest", "branch", "with", "your", "ID",
+        "for", "further", "assistance.", "Is", "there", "anything", "else", "I",
+        "can", "help", "you", "with", "today?", "Thank", "you", "for", "banking",
+        "with", "HDFC."
+      ]
+    },
+    {
+      "id": "TR-004",
+      "title": "TRAI Disconnection Threat",
+      "riskLevel": "high",
+      "words": [
+        "This", "is", "an", "automated", "message", "from", "TRAI,", "the",
+        "Telecom", "Regulatory", "Authority", "of", "India.", "Your", "mobile",
+        "number", "will", "be", "disconnected", "within", "two", "hours", "due",
+        "to", "suspicious", "activities", "linked", "to", "your", "SIM", "card.",
+        "Multiple", "complaints", "of", "fraud", "and", "harassment", "have",
+        "been", "registered", "against", "this", "number.", "Press", "one", "to",
+        "speak", "with", "a", "cyber", "crime", "officer.", "Your", "number",
+        "has", "been", "flagged", "by", "the", "CBI", "and", "an", "arrest",
+        "warrant", "is", "being", "processed.", "Do", "not", "disconnect",
+        "this", "call", "or", "switch", "off", "your", "phone.", "Stay", "on",
+        "the", "video", "call", "for", "identity", "verification.", "You", "must",
+        "transfer", "funds", "to", "a", "safe", "account", "to", "secure", "your",
+        "assets", "during", "the", "investigation."
+      ]
+    },
+    {
+      "id": "TR-005",
+      "title": "Income Tax Evasion Threat",
+      "riskLevel": "critical",
+      "words": [
+        "Hello,", "I", "am", "calling", "from", "the", "Income", "Tax",
+        "Department,", "Government", "of", "India.", "Your", "PAN", "card",
+        "number", "has", "been", "flagged", "for", "significant", "tax", "evasion",
+        "amounting", "to", "rupees", "eighteen", "lakhs.", "A", "non-bailable",
+        "arrest", "warrant", "has", "been", "issued", "by", "the", "Supreme",
+        "Court.", "CBI", "officers", "will", "arrive", "at", "your", "residence",
+        "within", "the", "next", "thirty", "minutes.", "This", "is", "your",
+        "last", "chance", "to", "settle", "this", "matter.", "You", "must",
+        "immediately", "transfer", "the", "pending", "tax", "amount", "plus",
+        "penalty", "to", "the", "designated", "safe", "government", "account.",
+        "Do", "not", "disconnect", "this", "call.", "Do", "not", "inform",
+        "your", "family", "members", "as", "this", "is", "a", "confidential",
+        "investigation.", "Stay", "on", "the", "video", "call.", "Provide",
+        "your", "bank", "account", "details", "for", "verification", "purposes."
+      ]
+    }
+  ],
+  "keywords": {
+    "critical": ["arrest warrant", "CBI", "do not disconnect", "safe account", "transfer", "video call", "stay on", "do not inform", "money laundering", "seized"],
+    "high": ["FIR", "investigation", "police", "court", "illegal", "complaint", "verify identity", "bank account details", "security deposit"],
+    "medium": ["suspicious", "flagged", "penalty", "urgent", "immediately", "deadline"],
+    "low": ["verify", "confirm", "regarding", "assistance"]
+  }
+}

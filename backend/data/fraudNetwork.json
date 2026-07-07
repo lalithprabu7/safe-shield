@@ -1,0 +1,114 @@
+{
+  "nodes": [
+    { "id": "PH-001", "label": "+91-98xx-xx4521", "type": "phone", "risk": "critical", "group": 1, "riskExplanation": "Primary caller number used in 47 confirmed digital arrest scam calls. Registered under fake identity.", "fraudAmount": "₹2.3 Cr", "lastActive": "2024-12-28" },
+    { "id": "PH-002", "label": "+91-87xx-xx9832", "type": "phone", "risk": "critical", "group": 1, "riskExplanation": "Secondary caller number linked to PH-001 via same IMEI device. Used in CBI impersonation calls.", "fraudAmount": "₹1.8 Cr", "lastActive": "2024-12-27" },
+    { "id": "BA-001", "label": "HDFC-xxx4872", "type": "bank", "risk": "critical", "group": 1, "riskExplanation": "Primary mule account receiving safe account transfers. ₹82L deposited and withdrawn within 48 hours.", "fraudAmount": "₹82 L", "lastActive": "2024-12-28" },
+    { "id": "BA-002", "label": "SBI-xxx9213", "type": "bank", "risk": "high", "group": 1, "riskExplanation": "Secondary mule account. Funds received from BA-001 via RTGS and immediately transferred to crypto exchange.", "fraudAmount": "₹45 L", "lastActive": "2024-12-26" },
+    { "id": "DV-001", "label": "IMEI-35291xxx", "type": "device", "risk": "critical", "group": 1, "riskExplanation": "Single device operating PH-001 and PH-002 via dual-SIM. Located in Jharkhand (Jamtara cluster).", "fraudAmount": "", "lastActive": "2024-12-28" },
+    { "id": "ID-001", "label": "Aadhaar-xxxx4378", "type": "identity", "risk": "high", "group": 1, "riskExplanation": "Fake Aadhaar used for SIM registration. Address maps to non-existent location.", "fraudAmount": "", "lastActive": "2024-12-20" },
+    { "id": "UP-001", "label": "UPI-xxx@ybl", "type": "upi", "risk": "high", "group": 1, "riskExplanation": "UPI VPA linked to BA-001. Used for receiving smaller scam amounts (₹10K-50K range).", "fraudAmount": "₹12 L", "lastActive": "2024-12-27" },
+
+    { "id": "PH-003", "label": "+91-70xx-xx1245", "type": "phone", "risk": "critical", "group": 2, "riskExplanation": "Hub phone for customs scam ring. Makes 200+ calls daily using auto-dialer. Spoofed caller ID shows Mumbai customs number.", "fraudAmount": "₹4.1 Cr", "lastActive": "2024-12-29" },
+    { "id": "PH-004", "label": "+91-63xx-xx8877", "type": "phone", "risk": "high", "group": 2, "riskExplanation": "Backup number for PH-003. Activated when primary is blocked. Same pattern of customs/parcel scam scripts.", "fraudAmount": "₹1.2 Cr", "lastActive": "2024-12-28" },
+    { "id": "BA-003", "label": "ICICI-xxx7631", "type": "bank", "risk": "critical", "group": 2, "riskExplanation": "Corporate mule account opened with forged GST certificate. Receives customs clearance fee payments.", "fraudAmount": "₹1.5 Cr", "lastActive": "2024-12-29" },
+    { "id": "BA-004", "label": "Axis-xxx3290", "type": "bank", "risk": "medium", "group": 2, "riskExplanation": "Tier-2 layering account. Small amounts aggregated here before forwarding to crypto wallets.", "fraudAmount": "₹28 L", "lastActive": "2024-12-25" },
+    { "id": "DV-002", "label": "IMEI-86774xxx", "type": "device", "risk": "high", "group": 2, "riskExplanation": "Device used by ring leader. Contains auto-dialer software and pre-recorded customs scam scripts.", "fraudAmount": "", "lastActive": "2024-12-29" },
+    { "id": "ID-002", "label": "PAN-AECPx4821", "type": "identity", "risk": "medium", "group": 2, "riskExplanation": "PAN card used for opening BA-003. Belongs to an unaware person whose identity was stolen.", "fraudAmount": "", "lastActive": "2024-12-15" },
+    { "id": "UP-002", "label": "UPI-xxx@paytm", "type": "upi", "risk": "high", "group": 2, "riskExplanation": "Merchant UPI used to collect customs clearance fees. Disguised as logistics company.", "fraudAmount": "₹18 L", "lastActive": "2024-12-28" },
+
+    { "id": "PH-005", "label": "+91-91xx-xx5567", "type": "phone", "risk": "high", "group": 3, "riskExplanation": "WhatsApp number used for investment/crypto scam recruitment via Telegram groups.", "fraudAmount": "₹3.5 Cr", "lastActive": "2024-12-30" },
+    { "id": "PH-006", "label": "+91-85xx-xx2210", "type": "phone", "risk": "medium", "group": 3, "riskExplanation": "Secondary recruitment number. Sends trading group links and fake profit screenshots.", "fraudAmount": "₹90 L", "lastActive": "2024-12-29" },
+    { "id": "BA-005", "label": "Kotak-xxx5544", "type": "bank", "risk": "critical", "group": 3, "riskExplanation": "Primary collection account for crypto investment scam. Receives victim deposits and converts to USDT.", "fraudAmount": "₹2.8 Cr", "lastActive": "2024-12-30" },
+    { "id": "DV-003", "label": "IMEI-45892xxx", "type": "device", "risk": "medium", "group": 3, "riskExplanation": "Device accessing multiple fake trading platforms. Browser history shows scam website administration.", "fraudAmount": "", "lastActive": "2024-12-29" },
+    { "id": "UP-003", "label": "UPI-xxx@gpay", "type": "upi", "risk": "high", "group": 3, "riskExplanation": "UPI used for collecting smaller investment amounts (₹5K-25K) from victims.", "fraudAmount": "₹35 L", "lastActive": "2024-12-28" },
+
+    { "id": "PH-007", "label": "+91-99xx-xx3344", "type": "phone", "risk": "high", "group": 4, "riskExplanation": "KYC fraud call center number. Sends fake bank KYC update links via SMS.", "fraudAmount": "₹1.1 Cr", "lastActive": "2024-12-27" },
+    { "id": "BA-006", "label": "PNB-xxx1187", "type": "bank", "risk": "high", "group": 4, "riskExplanation": "Receives funds from phished bank accounts. Multiple victims reported unauthorized debits to this account.", "fraudAmount": "₹65 L", "lastActive": "2024-12-27" },
+    { "id": "DV-004", "label": "IMEI-72341xxx", "type": "device", "risk": "medium", "group": 4, "riskExplanation": "Device hosting phishing website mimicking SBI online banking portal.", "fraudAmount": "", "lastActive": "2024-12-26" },
+    { "id": "ID-003", "label": "Aadhaar-xxxx9912", "type": "identity", "risk": "low", "group": 4, "riskExplanation": "Identity of a victim whose credentials were compromised. Used unknowingly in the scam chain.", "fraudAmount": "", "lastActive": "2024-12-10" }
+  ],
+  "links": [
+    { "source": "PH-001", "target": "DV-001", "type": "same_device" },
+    { "source": "PH-002", "target": "DV-001", "type": "same_device" },
+    { "source": "PH-001", "target": "BA-001", "type": "fund_transfer" },
+    { "source": "BA-001", "target": "BA-002", "type": "fund_transfer" },
+    { "source": "BA-001", "target": "UP-001", "type": "upi_link" },
+    { "source": "DV-001", "target": "ID-001", "type": "registered_identity" },
+    { "source": "PH-001", "target": "PH-002", "type": "call_pattern" },
+
+    { "source": "PH-003", "target": "DV-002", "type": "same_device" },
+    { "source": "PH-004", "target": "DV-002", "type": "same_device" },
+    { "source": "PH-003", "target": "BA-003", "type": "fund_transfer" },
+    { "source": "BA-003", "target": "BA-004", "type": "fund_transfer" },
+    { "source": "BA-003", "target": "UP-002", "type": "upi_link" },
+    { "source": "DV-002", "target": "ID-002", "type": "registered_identity" },
+    { "source": "PH-003", "target": "PH-004", "type": "call_pattern" },
+
+    { "source": "PH-005", "target": "DV-003", "type": "same_device" },
+    { "source": "PH-005", "target": "BA-005", "type": "fund_transfer" },
+    { "source": "PH-006", "target": "DV-003", "type": "same_device" },
+    { "source": "BA-005", "target": "UP-003", "type": "upi_link" },
+    { "source": "PH-005", "target": "PH-006", "type": "call_pattern" },
+
+    { "source": "PH-007", "target": "DV-004", "type": "same_device" },
+    { "source": "PH-007", "target": "BA-006", "type": "fund_transfer" },
+    { "source": "DV-004", "target": "ID-003", "type": "registered_identity" },
+
+    { "source": "BA-002", "target": "BA-005", "type": "cross_cluster_transfer" },
+    { "source": "PH-003", "target": "PH-001", "type": "communication" }
+  ],
+  "clusters": [
+    {
+      "id": 1,
+      "name": "Jamtara Digital Arrest Ring",
+      "riskScore": 94,
+      "totalTransactions": 1847,
+      "estimatedLoss": "₹4.93 Cr",
+      "activeMembers": 7,
+      "lastActivity": "2024-12-28",
+      "scamType": "Digital Arrest / CBI Impersonation",
+      "operatingRegion": "Jharkhand (Jamtara-Deoghar axis)",
+      "description": "Organized ring operating from Jamtara district. Members impersonate CBI/ED officers, threaten victims with arrest, and coerce transfer to mule accounts. Uses deepfake voice technology.",
+      "recommendedAction": "Coordinate with Jharkhand Cyber Cell. Issue lookout notice for IMEI-35291xxx. Freeze all linked bank accounts under PMLA."
+    },
+    {
+      "id": 2,
+      "name": "Mumbai Customs Scam Network",
+      "riskScore": 87,
+      "totalTransactions": 2340,
+      "estimatedLoss": "₹6.98 Cr",
+      "activeMembers": 7,
+      "lastActivity": "2024-12-29",
+      "scamType": "Customs / Courier Parcel Scam",
+      "operatingRegion": "Maharashtra (Mumbai-Thane corridor)",
+      "description": "Network impersonating customs officials, claiming victims' parcels contain illegal items. Demands customs clearance fees and threatens arrest under NDPS Act.",
+      "recommendedAction": "Alert Mumbai Cyber Crime Branch. Block identified phone numbers via DoT. Conduct raid on suspected call center location."
+    },
+    {
+      "id": 3,
+      "name": "Crypto Investment Fraud Syndicate",
+      "riskScore": 79,
+      "totalTransactions": 956,
+      "estimatedLoss": "₹7.15 Cr",
+      "activeMembers": 5,
+      "lastActivity": "2024-12-30",
+      "scamType": "Investment / Cryptocurrency Scam",
+      "operatingRegion": "Cross-border (India-Cambodia-Myanmar)",
+      "description": "Sophisticated investment scam using fake trading platforms and Telegram groups. Victims are lured with small initial profits before losing large deposits.",
+      "recommendedAction": "Coordinate with I4C for cross-border investigation. Block identified crypto wallet addresses. Issue SEBI advisory about fake platform."
+    },
+    {
+      "id": 4,
+      "name": "KYC Phishing Cell",
+      "riskScore": 68,
+      "totalTransactions": 523,
+      "estimatedLoss": "₹1.75 Cr",
+      "activeMembers": 3,
+      "lastActivity": "2024-12-27",
+      "scamType": "Bank KYC Phishing",
+      "operatingRegion": "West Bengal (Kolkata metropolitan)",
+      "description": "Small cell operating fake KYC update campaigns via bulk SMS. Phishing pages mimic SBI/HDFC/ICICI banking portals to steal credentials.",
+      "recommendedAction": "Report phishing domains to CERT-In for takedown. Alert telecom operators about bulk SMS sender IDs. Monitor PNB account for further activity."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "cities": [
+    { "name": "Delhi", "lat": 28.6139, "lng": 77.2090, "complaints": 5420, "topScams": ["Digital Arrest", "UPI Fraud", "Fake KYC"], "severity": "critical" },
+    { "name": "Mumbai", "lat": 19.0760, "lng": 72.8777, "complaints": 4870, "topScams": ["Customs Scam", "Investment Fraud", "Phishing"], "severity": "critical" },
+    { "name": "Bengaluru", "lat": 12.9716, "lng": 77.5946, "complaints": 4210, "topScams": ["Job Scam", "UPI Fraud", "Crypto Scam"], "severity": "critical" },
+    { "name": "Hyderabad", "lat": 17.3850, "lng": 78.4867, "complaints": 3680, "topScams": ["Digital Arrest", "Loan Scam", "OTP Scam"], "severity": "high" },
+    { "name": "Chennai", "lat": 13.0827, "lng": 80.2707, "complaints": 3240, "topScams": ["Courier Scam", "Bank Phishing", "Lottery Scam"], "severity": "high" },
+    { "name": "Kolkata", "lat": 22.5726, "lng": 88.3639, "complaints": 2890, "topScams": ["KYC Fraud", "Digital Arrest", "Impersonation"], "severity": "high" },
+    { "name": "Pune", "lat": 18.5204, "lng": 73.8567, "complaints": 2560, "topScams": ["Investment Scam", "Job Scam", "UPI Fraud"], "severity": "high" },
+    { "name": "Ahmedabad", "lat": 23.0225, "lng": 72.5714, "complaints": 2180, "topScams": ["Safe Account Scam", "Customs Scam", "Lottery Scam"], "severity": "medium" },
+    { "name": "Jaipur", "lat": 26.9124, "lng": 75.7873, "complaints": 1920, "topScams": ["Digital Arrest", "OTP Scam", "UPI Fraud"], "severity": "medium" },
+    { "name": "Lucknow", "lat": 26.8467, "lng": 80.9462, "complaints": 1750, "topScams": ["Bank Phishing", "Loan Scam", "KYC Fraud"], "severity": "medium" },
+    { "name": "Chandigarh", "lat": 30.7333, "lng": 76.7794, "complaints": 1480, "topScams": ["Customs Scam", "Digital Arrest", "Job Scam"], "severity": "medium" },
+    { "name": "Indore", "lat": 22.7196, "lng": 75.8577, "complaints": 1320, "topScams": ["Investment Scam", "OTP Scam", "Loan Scam"], "severity": "medium" },
+    { "name": "Jamtara", "lat": 23.9636, "lng": 86.8080, "complaints": 4950, "topScams": ["Digital Arrest", "Phishing", "OTP Scam"], "severity": "critical" },
+    { "name": "Coimbatore", "lat": 11.0168, "lng": 76.9558, "complaints": 980, "topScams": ["Lottery Scam", "Job Scam", "UPI Fraud"], "severity": "low" },
+    { "name": "Visakhapatnam", "lat": 17.6868, "lng": 83.2185, "complaints": 870, "topScams": ["Bank Phishing", "Courier Scam", "OTP Scam"], "severity": "low" },
+    { "name": "Nagpur", "lat": 21.1458, "lng": 79.0882, "complaints": 760, "topScams": ["Digital Arrest", "UPI Fraud", "KYC Fraud"], "severity": "low" },
+    { "name": "Bhopal", "lat": 23.2599, "lng": 77.4126, "complaints": 690, "topScams": ["Loan Scam", "Job Scam", "Impersonation"], "severity": "low" },
+    { "name": "Patna", "lat": 25.6093, "lng": 85.1376, "complaints": 1580, "topScams": ["OTP Scam", "Digital Arrest", "KYC Fraud"], "severity": "medium" },
+    { "name": "Guwahati", "lat": 26.1445, "lng": 91.7362, "complaints": 620, "topScams": ["Lottery Scam", "Job Scam", "UPI Fraud"], "severity": "low" },
+    { "name": "Kochi", "lat": 9.9312, "lng": 76.2673, "complaints": 1180, "topScams": ["Crypto Scam", "Investment Fraud", "Bank Phishing"], "severity": "medium" },
+    { "name": "Thiruvananthapuram", "lat": 8.5241, "lng": 76.9366, "complaints": 920, "topScams": ["Lottery Scam", "Job Scam", "Fake KYC"], "severity": "low" },
+    { "name": "Surat", "lat": 21.1702, "lng": 72.8311, "complaints": 1350, "topScams": ["Investment Scam", "Customs Scam", "Digital Arrest"], "severity": "medium" },
+    { "name": "Ranchi", "lat": 23.3441, "lng": 85.3096, "complaints": 2100, "topScams": ["Digital Arrest", "Phishing", "OTP Scam"], "severity": "high" },
+    { "name": "Noida", "lat": 28.5355, "lng": 77.3910, "complaints": 3100, "topScams": ["Fake Call Center", "Digital Arrest", "UPI Fraud"], "severity": "high" },
+    { "name": "Gurugram", "lat": 28.4595, "lng": 77.0266, "complaints": 2750, "topScams": ["Investment Scam", "Job Scam", "Crypto Scam"], "severity": "high" }
+  ]
+}

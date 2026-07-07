@@ -1,0 +1,144 @@
+{
+  "cases": [
+    {
+      "id": "DS-2024-001",
+      "title": "CBI Digital Arrest — ₹15L Safe Account Transfer",
+      "timestamp": "2024-12-28T14:32:00Z",
+      "type": "Digital Arrest",
+      "riskScore": 94,
+      "status": "confirmed_scam",
+      "transcript_excerpt": "This is Senior Inspector from CBI. Your Aadhaar has been linked to money laundering. An arrest warrant has been issued. Transfer funds to safe account provided by RBI. Do not disconnect or inform anyone.",
+      "detected_patterns": [
+        "CBI Authority Impersonation",
+        "Non-Bailable Arrest Warrant Threat",
+        "Safe Account Transfer Demand (₹15L)",
+        "Video Call Coercion (3.5 hours)",
+        "Information Blackout Order",
+        "Aadhaar-based Identity Harvesting",
+        "PMLA Legal Reference Abuse"
+      ],
+      "confidence_scores": {
+        "scam_detection": 0.94,
+        "voice_analysis": 0.87,
+        "pattern_matching": 0.96,
+        "behavioral_analysis": 0.91,
+        "identity_verification": 0.85,
+        "network_correlation": 0.78
+      },
+      "phone_number": "+91-98xx-xx4521",
+      "duration_seconds": 12600,
+      "amount_at_risk": "₹15,00,000"
+    },
+    {
+      "id": "DS-2024-002",
+      "title": "Mumbai Customs Parcel Scam — ₹3.2L Clearance Fee",
+      "timestamp": "2024-12-29T09:15:00Z",
+      "type": "Customs/Parcel Scam",
+      "riskScore": 88,
+      "status": "confirmed_scam",
+      "transcript_excerpt": "Your FedEx parcel from Hong Kong has been seized at Mumbai customs. It contains 500g of MDMA and 3 fake passports. An FIR has been registered under NDPS Act. Pay customs clearance fee to avoid arrest.",
+      "detected_patterns": [
+        "Customs Authority Impersonation",
+        "Parcel Seizure Claim (FedEx)",
+        "Drug Possession Accusation (NDPS Act)",
+        "FIR Registration Threat",
+        "Customs Clearance Fee Demand (₹3.2L)",
+        "Arrest Threat with Legal Citation"
+      ],
+      "confidence_scores": {
+        "scam_detection": 0.88,
+        "voice_analysis": 0.72,
+        "pattern_matching": 0.91,
+        "behavioral_analysis": 0.84,
+        "identity_verification": 0.80,
+        "network_correlation": 0.82
+      },
+      "phone_number": "+91-70xx-xx1245",
+      "duration_seconds": 2700,
+      "amount_at_risk": "₹3,20,000"
+    },
+    {
+      "id": "DS-2024-003",
+      "title": "Telegram Crypto Investment Fraud — ₹8.5L Lost",
+      "timestamp": "2024-12-30T16:45:00Z",
+      "type": "Investment/Crypto Scam",
+      "riskScore": 82,
+      "status": "confirmed_scam",
+      "transcript_excerpt": "Join our exclusive crypto trading group. Guaranteed 300% returns in 7 days. Minimum investment only ₹50,000. First 3 trades are free. Deposit now to start earning. Your withdrawal will be processed after paying 18% GST fee.",
+      "detected_patterns": [
+        "Guaranteed Returns Promise (300%)",
+        "Telegram Group Recruitment",
+        "Crypto Trading Platform (Fake)",
+        "Minimum Investment Demand",
+        "Withdrawal Fee Scam (GST pretext)",
+        "Social Engineering via Fake Profit Screenshots"
+      ],
+      "confidence_scores": {
+        "scam_detection": 0.82,
+        "voice_analysis": 0.45,
+        "pattern_matching": 0.88,
+        "behavioral_analysis": 0.79,
+        "identity_verification": 0.60,
+        "network_correlation": 0.71
+      },
+      "phone_number": "+91-91xx-xx5567",
+      "duration_seconds": 0,
+      "amount_at_risk": "₹8,50,000"
+    },
+    {
+      "id": "DS-2024-004",
+      "title": "SBI KYC Phishing — Account Credentials Compromised",
+      "timestamp": "2024-12-27T11:20:00Z",
+      "type": "Bank Phishing / Fake KYC",
+      "riskScore": 76,
+      "status": "confirmed_scam",
+      "transcript_excerpt": "Dear SBI customer, your KYC has expired. Your account will be suspended within 24 hours. Click this link to update KYC immediately: http://sbi-kyc-update.xyz/verify. Enter your customer ID, password, and OTP.",
+      "detected_patterns": [
+        "Fake KYC Expiry Notice",
+        "Account Suspension Threat",
+        "Phishing URL (sbi-kyc-update.xyz)",
+        "Credential Harvesting (ID + Password + OTP)",
+        "Urgency-based Social Engineering",
+        "SBI Brand Impersonation"
+      ],
+      "confidence_scores": {
+        "scam_detection": 0.76,
+        "voice_analysis": 0.30,
+        "pattern_matching": 0.85,
+        "behavioral_analysis": 0.72,
+        "identity_verification": 0.68,
+        "network_correlation": 0.55
+      },
+      "phone_number": "+91-99xx-xx3344",
+      "duration_seconds": 0,
+      "amount_at_risk": "₹2,40,000"
+    },
+    {
+      "id": "DS-2024-005",
+      "title": "Electricity Disconnection + OTP Theft — ₹45K Debited",
+      "timestamp": "2024-12-26T08:30:00Z",
+      "type": "Utility Scam / OTP Theft",
+      "riskScore": 71,
+      "status": "confirmed_scam",
+      "transcript_excerpt": "Your electricity bill of ₹12,847 is overdue. Supply will be disconnected today at 2 PM. To avoid disconnection, pay now. I am sending you an OTP for verification. Please share the 6-digit code you receive.",
+      "detected_patterns": [
+        "Electricity Disconnection Threat",
+        "Overdue Bill Claim (Fake Amount)",
+        "OTP Request via Phone",
+        "Urgency-based Coercion",
+        "Social Engineering Attack"
+      ],
+      "confidence_scores": {
+        "scam_detection": 0.71,
+        "voice_analysis": 0.55,
+        "pattern_matching": 0.78,
+        "behavioral_analysis": 0.68,
+        "identity_verification": 0.72,
+        "network_correlation": 0.40
+      },
+      "phone_number": "+91-88xx-xx6612",
+      "duration_seconds": 480,
+      "amount_at_risk": "₹45,000"
+    }
+  ]
+}
