@@ -9,6 +9,12 @@ const LANGUAGES = [
   { code: 'te', label: 'Telugu', native: 'తెలుగు' },
   { code: 'kn', label: 'Kannada', native: 'ಕನ್ನಡ' },
   { code: 'bn', label: 'Bengali', native: 'বাংলা' },
+  { code: 'mr', label: 'Marathi', native: 'मराठी' },
+  { code: 'gu', label: 'Gujarati', native: 'ગુજરાતી' },
+  { code: 'ml', label: 'Malayalam', native: 'മലയാളം' },
+  { code: 'or', label: 'Odia', native: 'ଓଡ଼ିଆ' },
+  { code: 'pa', label: 'Punjabi', native: 'ਪੰਜਾਬੀ' },
+  { code: 'as', label: 'Assamese', native: 'অসমীয়া' },
 ];
 
 interface Section {

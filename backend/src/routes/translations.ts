@@ -10,7 +10,7 @@ const translations = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 router.get('/:lang', (req, res) => {
   try {
     const lang = req.params.lang;
-    const validLangs = ['en', 'hi', 'ta', 'te', 'kn', 'bn', 'mr', 'gu'];
+    const validLangs = ['en', 'hi', 'ta', 'te', 'kn', 'bn', 'mr', 'gu', 'ml', 'or', 'pa', 'as'];
     if (!validLangs.includes(lang)) {
       return res.status(400).json({ error: `Invalid language. Valid: ${validLangs.join(', ')}` });
     }
