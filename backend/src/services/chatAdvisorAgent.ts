@@ -348,19 +348,25 @@ export async function initNLPModel() {
       
       for (const sp of SCAM_PHRASES) {
         // Boost weight by adding phrase multiple times based on weight
-        const iterations = Math.ceil(sp.weight / 5);
+        const iterations = Math.ceil(sp.weight / 5) * 10;
         for (let i = 0; i < iterations; i++) {
           classifier.addDocument(sp.phrase, sp.category);
         }
       }
       
-      // Add safe examples to prevent false positives
-      classifier.addDocument('hello how are you', 'Safe');
-      classifier.addDocument('can we meet tomorrow', 'Safe');
-      classifier.addDocument('i transferred the money for the rent', 'Safe');
-      classifier.addDocument('did you get my email', 'Safe');
-      classifier.addDocument('happy birthday', 'Safe');
-      classifier.addDocument('the meeting is scheduled for 5pm', 'Safe');
+      // Add safe examples to prevent false positives (loop to balance weights)
+      const safeExamples = [
+        'hello how are you', 'can we meet tomorrow', 'i transferred the money for the rent',
+        'did you get my email', 'happy birthday', 'the meeting is scheduled for 5pm',
+        'what did you have for lunch', 'call me back when you are free', 'the package has been delivered',
+        'mom are you at home', 'where are we going for dinner', 'good morning have a great day',
+        'i will send the document shortly', 'thanks for the update', 'let me know if you need help'
+      ];
+      for (const safe of safeExamples) {
+        for (let i = 0; i < 50; i++) {
+          classifier.addDocument(safe, 'Safe');
+        }
+      }
       
       classifier.train();
       
@@ -483,17 +489,50 @@ export async function analyzeMessage(message: string, lang: string = 'en'): Prom
 
   let scamCategory = topClassification.label;
   
+  // -------------------------------------------------------------
+  // False Positive Mitigation Heuristic
+  // Naive Bayes can be overly confident on completely unknown words
+  // if they happen to share stop-words with a highly-weighted class.
+  // -------------------------------------------------------------
+  const normalizedWords = normalized.split(/\s+/);
+  let maxPhraseMatch = 0;
+  
+  const isSignificant = (w: string) => {
+    const importantShortWords = ['cbi', 'otp', 'pin', 'cvv', 'fir', 'rbi', 'nia', 'kyc', 'job', 'pay', 'tax', 'sms', 'link', 'app', 'qr', 'card', 'bank', 'win', 'won'];
+    if (importantShortWords.includes(w)) return true;
+    const stopWords = ['from', 'your', 'with', 'this', 'that', 'have', 'will', 'been', 'what', 'when', 'into', 'they', 'them', 'then', 'than'];
+    if (stopWords.includes(w)) return false;
+    return w.length >= 4;
+  };
+
+  for (const sp of SCAM_PHRASES) {
+    const phraseLower = sp.phrase.toLowerCase();
+    if (normalized.includes(phraseLower)) {
+      maxPhraseMatch = 1.0;
+      break;
+    }
+    const phraseWords = phraseLower.split(' ');
+    const matchedWords = phraseWords.filter(w => isSignificant(w) && normalizedWords.includes(w));
+    if (phraseWords.length > 0 && matchedWords.length > 0) {
+      maxPhraseMatch = Math.max(maxPhraseMatch, matchedWords.length / phraseWords.length);
+    }
+  }
+
   // Determine probability
-  // The values from BayesClassifier are often extremely small or normalized.
-  // We'll calculate a relative confidence percentage
   let riskScore = 0;
   if (scamCategory !== 'Safe') {
-    // Basic heuristic: Bayes confidence spread
-    // If the top class is strongly favored over the second
-    if (secondClassification && topClassification.value > 0) {
-      riskScore = Math.min(99, Math.round((topClassification.value / (topClassification.value + secondClassification.value)) * 100));
+    if (maxPhraseMatch < 0.3 && suspiciousURLs.length === 0 && detectedNumbers.length === 0) {
+      // Overrule the ML classifier if there's virtually no keyword overlap 
+      // and no hard indicators like suspicious URLs/numbers
+      scamCategory = 'Safe';
+      riskScore = 5;
     } else {
-      riskScore = 85; // Strong match with no close second
+      // Basic heuristic: Bayes confidence spread
+      if (secondClassification && topClassification.value > 0) {
+        riskScore = Math.min(99, Math.round((topClassification.value / (topClassification.value + secondClassification.value)) * 100));
+      } else {
+        riskScore = 85; // Strong match with no close second
+      }
     }
   } else {
     // It matched 'Safe'

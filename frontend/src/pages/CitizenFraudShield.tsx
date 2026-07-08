@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Send, Upload, Shield, AlertTriangle, CheckCircle, Loader2, Flag, FileText } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, Upload, Shield, AlertTriangle, CheckCircle, Loader2, Flag, FileText, ChevronDown, ChevronUp, Target } from 'lucide-react';
 import { useToast } from '../components/common/Toast';
 import { UI_TRANSLATIONS } from '../utils/translations';
 import { MOCK_SCAMS } from '../utils/mockData';
@@ -42,6 +42,32 @@ const LANGUAGES = [
   { code: 'as', label: 'Assamese', native: 'অসমীয়া' },
 ];
 
+function RiskGauge({ value }: { value: number }) {
+  const radius = 45;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (value / 100) * circumference;
+  const color = value >= 70 ? '#EF4444' : value >= 40 ? '#F59E0B' : '#10B981';
+
+  return (
+    <div className="relative w-28 h-28 mx-auto">
+      <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r={radius} fill="none" stroke="#1F2937" strokeWidth="8" />
+        <circle
+          cx="50" cy="50" r={radius} fill="none"
+          stroke={color} strokeWidth="8" strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          style={{ transition: 'stroke-dashoffset 0.5s ease-out, stroke 0.3s' }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-h3 font-bold text-white tabular-nums">{value}</span>
+        <span className="text-[10px] text-gray-400 uppercase tracking-wider">Risk %</span>
+      </div>
+    </div>
+  );
+}
+
 export default function CitizenFraudShield() {
   const [selectedLang, setSelectedLang] = useState('en');
   const t = UI_TRANSLATIONS[selectedLang] || UI_TRANSLATIONS['en'];
@@ -52,6 +78,7 @@ export default function CitizenFraudShield() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [verdict, setVerdict] = useState<Verdict | null>(null);
+  const [expandedIndicator, setExpandedIndicator] = useState<number | null>(null);
 
   const chatRef = useRef<HTMLDivElement>(null);
   const toast = useToast();
@@ -73,6 +100,7 @@ export default function CitizenFraudShield() {
     setInput('');
     setLoading(true);
     setVerdict(null);
+    setExpandedIndicator(null);
 
     try {
       const resp = await fetch('/api/chat/analyze', {
@@ -127,7 +155,7 @@ export default function CitizenFraudShield() {
           <select 
             value={selectedLang}
             onChange={(e) => setSelectedLang(e.target.value)}
-            className="bg-navy-700/50 border border-white/10 text-gray-300 text-caption rounded-lg px-3 py-2 outline-none focus:border-accent transition-colors"
+            className="bg-navy-700/50 border border-white/10 text-gray-300 text-caption rounded-lg px-3 py-2 outline-none focus:border-accent transition-colors cursor-pointer"
           >
             {LANGUAGES.map(l => (
               <option key={l.code} value={l.code}>{l.native} ({l.label})</option>
@@ -145,10 +173,10 @@ export default function CitizenFraudShield() {
             >
               <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                 msg.type === 'user'
-                  ? 'bg-accent/20 text-gray-200 rounded-br-md'
-                  : 'bg-navy-700 text-gray-300 rounded-bl-md'
+                  ? 'bg-accent/20 text-gray-200 rounded-br-md border border-accent/20'
+                  : 'bg-navy-700 text-gray-300 rounded-bl-md border border-white/5'
               }`}>
-                <p className="text-body">{msg.content}</p>
+                <p className="text-body whitespace-pre-wrap">{msg.content}</p>
                 <p className="text-[10px] text-gray-500 mt-1.5">
                   {msg.timestamp.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
                 </p>
@@ -157,7 +185,7 @@ export default function CitizenFraudShield() {
           ))}
           {loading && (
             <div className="flex justify-start">
-              <div className="bg-navy-700 rounded-2xl rounded-bl-md px-4 py-3">
+              <div className="bg-navy-700 border border-white/5 rounded-2xl rounded-bl-md px-4 py-3">
                 <Loader2 className="w-4 h-4 text-accent animate-spin" />
               </div>
             </div>
@@ -170,7 +198,7 @@ export default function CitizenFraudShield() {
             <button 
               type="button" 
               onClick={() => analyzeMessage(MOCK_SCAMS[selectedLang] || MOCK_SCAMS['en'])}
-              className="text-left text-sm text-gray-300 bg-navy-900/50 hover:bg-navy-700 p-3 rounded-lg border border-white/10 transition-colors w-full"
+              className="text-left text-sm text-gray-300 bg-navy-900/50 hover:bg-navy-700 p-3 rounded-lg border border-white/10 transition-colors w-full truncate"
             >
               "{MOCK_SCAMS[selectedLang] || MOCK_SCAMS['en']}"
             </button>
@@ -206,42 +234,59 @@ export default function CitizenFraudShield() {
             </div>
           </div>
         ) : vs && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4 flex-1 overflow-y-auto">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-2">
+            <div className="flex justify-center mb-6 mt-2">
+              <RiskGauge value={verdict.riskScore} />
+            </div>
+
             <div className={`${vs.bg} border ${vs.border} rounded-xl p-4 flex items-center gap-3`}>
               <vs.icon className={`w-8 h-8 ${vs.text}`} />
               <div>
                 <p className={`text-subheading font-bold ${vs.text}`}>{vs.label}</p>
-                <p className="text-caption text-gray-400">{t.riskScore}: {verdict.riskScore}%{verdict.scamCategory && verdict.scamCategory !== 'None' ? ` • ${verdict.scamCategory}` : ''}</p>
+                <p className="text-caption text-gray-400">{verdict.scamCategory && verdict.scamCategory !== 'None' ? verdict.scamCategory : 'General Analysis'}</p>
               </div>
             </div>
 
             {verdict.indicators.length > 0 && (
-              <div>
-                <h4 className="text-caption font-semibold text-gray-400 uppercase tracking-wider mb-2">{t.detectedIndicators}</h4>
-                <div className="space-y-1.5">
+              <div className="mt-4">
+                <h4 className="text-caption font-semibold text-gray-400 uppercase tracking-wider mb-3">{t.detectedIndicators}</h4>
+                <div className="space-y-2">
                   {verdict.indicators.map((ind, i) => (
-                    <div key={i} className="flex items-center gap-2 text-caption text-gray-300">
-                      <span className="w-1.5 h-1.5 rounded-full bg-danger shrink-0" />
-                      {ind}
+                    <div 
+                      key={i} 
+                      className={`bg-navy-800 rounded-lg border transition-colors cursor-pointer
+                        ${expandedIndicator === i ? 'border-accent/50 bg-navy-700' : 'border-white/5 hover:border-white/20'}`}
+                      onClick={() => setExpandedIndicator(expandedIndicator === i ? null : i)}
+                    >
+                      <div className="p-3 flex items-start gap-3">
+                        <Target className={`w-4 h-4 mt-0.5 shrink-0 ${verdict.verdict === 'high_risk' ? 'text-danger' : 'text-warning'}`} />
+                        <div className="flex-1">
+                          <p className={`text-caption ${expandedIndicator === i ? 'text-gray-200' : 'text-gray-300 line-clamp-1'}`}>
+                            {ind}
+                          </p>
+                        </div>
+                        {expandedIndicator === i ? <ChevronUp className="w-4 h-4 text-gray-400 shrink-0" /> : <ChevronDown className="w-4 h-4 text-gray-400 shrink-0" />}
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            <div>
-              <h4 className="text-caption font-semibold text-gray-400 uppercase tracking-wider mb-2">{t.safetyAdvice}</h4>
+            <div className="mt-4 bg-navy-900/50 p-4 rounded-xl border border-white/5">
+              <h4 className="text-caption font-semibold text-gray-400 uppercase tracking-wider mb-3">{t.safetyAdvice}</h4>
               <div className="space-y-2">
                 {verdict.advice.map((adv, i) => (
-                  <p key={i} className="text-caption text-gray-400 flex gap-2">
-                    <span className="text-accent shrink-0">•</span> {adv}
+                  <p key={i} className="text-caption text-gray-300 flex items-start gap-2">
+                    <span className="text-accent mt-0.5">•</span> 
+                    <span>{adv}</span>
                   </p>
                 ))}
               </div>
             </div>
 
             {verdict.verdict !== 'safe' && (
-              <button onClick={reportToNCRB} className="btn-danger w-full flex items-center justify-center gap-2 mt-2">
+              <button onClick={reportToNCRB} className="btn-danger w-full flex items-center justify-center gap-2 mt-4">
                 <Flag className="w-4 h-4" /> {t.reportNcrb}
               </button>
             )}

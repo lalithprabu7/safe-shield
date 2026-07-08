@@ -102,28 +102,71 @@ const SECURITY_FEATURES = [
   },
 ];
 
-export function analyzeCurrency(fileName: string): CurrencyAnalysisResult {
+import fs from 'fs';
+import path from 'path';
+
+export function analyzeCurrency(fileName: string, mlFeatures?: number[]): CurrencyAnalysisResult {
   const hash = hashString(fileName.toLowerCase());
   const rng = seededRandom(hash);
 
-  // Determine if genuine or fake based on filename
-  const nameLower = fileName.toLowerCase();
-  const genuineIndicators = ['genuine', 'real', 'authentic', 'valid', 'clean', 'original'];
-  const fakeIndicators = ['fake', 'counterfeit', 'suspect', 'forged', 'copy', 'duplicate', 'suspicious'];
-
-  let isGenuine: boolean;
+  // Determine if genuine or fake based on filename or ML Model
+  let isGenuine: boolean = false;
   let overrideFactor = 0;
 
-  if (genuineIndicators.some((g) => nameLower.includes(g))) {
-    isGenuine = true;
-    overrideFactor = 0.9;
-  } else if (fakeIndicators.some((f) => nameLower.includes(f))) {
-    isGenuine = false;
-    overrideFactor = 0.85;
-  } else {
-    // Deterministic from hash
-    isGenuine = (hash % 100) >= 45; // ~55% genuine for unknown files
-    overrideFactor = 0;
+  if (mlFeatures && mlFeatures.length >= 3) {
+    try {
+      const modelPath = path.join(__dirname, '../models/currency_weights.json');
+      const modelData = JSON.parse(fs.readFileSync(modelPath, 'utf8'));
+      
+      if (modelData.type === 'mlp') {
+        // Multi-Layer Perceptron Forward Pass
+        const { w_ih, b_h, w_ho, b_o } = modelData;
+        const hiddenSize = b_h.length;
+        const inputSize = mlFeatures.length;
+        
+        // Hidden Layer
+        const hidden_a = new Array(hiddenSize).fill(0);
+        for (let j = 0; j < hiddenSize; j++) {
+          let z = 0;
+          for (let i = 0; i < inputSize; i++) {
+            z += mlFeatures[i] * w_ih[i][j];
+          }
+          z += b_h[j];
+          hidden_a[j] = 1 / (1 + Math.exp(-z)); // Sigmoid
+        }
+        
+        // Output Layer
+        let output_z = 0;
+        for (let j = 0; j < hiddenSize; j++) {
+          output_z += hidden_a[j] * w_ho[j];
+        }
+        output_z += b_o;
+        const prob = 1 / (1 + Math.exp(-output_z));
+        
+        isGenuine = prob > 0.5;
+        overrideFactor = isGenuine ? prob : 1 - prob;
+      }
+    } catch (e) {
+      console.error("Failed to run MLP model, falling back", e);
+    }
+  }
+  
+  if (overrideFactor === 0) {
+    const nameLower = fileName.toLowerCase();
+    const genuineIndicators = ['genuine', 'real', 'authentic', 'valid', 'clean', 'original'];
+    const fakeIndicators = ['fake', 'counterfeit', 'suspect', 'forged', 'copy', 'duplicate', 'suspicious'];
+
+    if (genuineIndicators.some((g) => nameLower.includes(g))) {
+      isGenuine = true;
+      overrideFactor = 0.9;
+    } else if (fakeIndicators.some((f) => nameLower.includes(f))) {
+      isGenuine = false;
+      overrideFactor = 0.85;
+    } else {
+      // Deterministic from hash
+      isGenuine = (hash % 100) >= 45; // ~55% genuine for unknown files
+      overrideFactor = 0;
+    }
   }
 
   // Determine denomination
@@ -183,16 +226,16 @@ export function analyzeCurrency(fileName: string): CurrencyAnalysisResult {
     overallConfidence = isGenuine
       ? 0.70 + (passedCount / features.length) * 0.25
       : 0.60 + (failedCount / features.length) * 0.30;
-  }
-
-  // Final genuineness check (features can override classification)
-  if (failedCount >= 4 && isGenuine) {
-    isGenuine = false;
-    overallConfidence = 0.55 + (failedCount / features.length) * 0.30;
-  }
-  if (passedCount >= 7 && !isGenuine) {
-    isGenuine = true;
-    overallConfidence = 0.70 + (passedCount / features.length) * 0.20;
+      
+    // Final genuineness check (features can override classification)
+    if (failedCount >= 4 && isGenuine) {
+      isGenuine = false;
+      overallConfidence = 0.55 + (failedCount / features.length) * 0.30;
+    }
+    if (passedCount >= 7 && !isGenuine) {
+      isGenuine = true;
+      overallConfidence = 0.70 + (passedCount / features.length) * 0.20;
+    }
   }
 
   // Verdict

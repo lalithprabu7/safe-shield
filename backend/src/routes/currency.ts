@@ -6,11 +6,11 @@ const router = Router();
 // POST /api/currency/analyze — analyze a currency note image
 router.post('/analyze', (req, res) => {
   try {
-    const { fileName } = req.body;
+    const { fileName, features } = req.body;
     if (!fileName) {
       return res.status(400).json({ error: 'fileName is required' });
     }
-    const result = analyzeCurrency(fileName);
+    const result = analyzeCurrency(fileName, features);
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: 'Currency analysis failed' });

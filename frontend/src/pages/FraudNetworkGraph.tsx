@@ -161,30 +161,31 @@ export default function FraudNetworkGraph() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="absolute top-0 right-0 bottom-0 w-80 glass-card border-l border-white/10 overflow-y-auto"
+            className="absolute top-0 right-0 bottom-0 w-[360px] glass-card border-l border-white/10 flex flex-col"
           >
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-body-lg font-semibold text-white">Node Details</h3>
-                <button onClick={closePanel} className="text-gray-400 hover:text-white transition-colors">
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
+            <div className="p-5 border-b border-white/[0.06] flex items-center justify-between shrink-0">
+              <h3 className="text-body-lg font-semibold text-white">Forensic Node Inspector</h3>
+              <button onClick={closePanel} className="text-gray-400 hover:text-white transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
+            <div className="p-5 overflow-y-auto flex-1 custom-scrollbar space-y-5">
               {/* Node Info */}
               <div className="space-y-4">
                 <div className="bg-navy-700/50 rounded-lg p-3 border border-white/5">
-                  <p className="text-caption text-gray-500 mb-1">Identifier</p>
+                  <p className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider mb-1">Entity Identifier</p>
                   <p className="text-body font-mono text-white">{selectedNode.label}</p>
                 </div>
+                
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-navy-700/50 rounded-lg p-3 border border-white/5">
-                    <p className="text-caption text-gray-500 mb-1">Type</p>
+                    <p className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider mb-1">Entity Type</p>
                     <p className="text-body text-white capitalize">{TYPE_SHAPES[selectedNode.type] || ''} {selectedNode.type}</p>
                   </div>
-                  <div className="bg-navy-700/50 rounded-lg p-3 border border-white/5">
-                    <p className="text-caption text-gray-500 mb-1">Risk</p>
-                    <span className="text-body font-semibold capitalize" style={{ color: RISK_COLORS[selectedNode.risk] }}>
+                  <div className={`rounded-lg p-3 border ${selectedNode.risk === 'critical' ? 'bg-danger/10 border-danger/30' : selectedNode.risk === 'high' ? 'bg-warning/10 border-warning/30' : 'bg-navy-700/50 border-white/5'}`}>
+                    <p className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider mb-1">Threat Level</p>
+                    <span className="text-body font-bold capitalize" style={{ color: RISK_COLORS[selectedNode.risk] }}>
                       {selectedNode.risk}
                     </span>
                   </div>
@@ -192,41 +193,58 @@ export default function FraudNetworkGraph() {
 
                 {/* Node Risk Explanation */}
                 {selectedNode.riskExplanation && (
-                  <div className="bg-navy-700/50 rounded-lg p-3 border border-white/5">
-                    <p className="text-caption text-gray-500 mb-1">Risk Explanation</p>
+                  <div className="bg-navy-800 rounded-lg p-3 border border-white/5">
+                    <p className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider mb-2">AI Risk Analysis</p>
                     <p className="text-caption text-gray-300 leading-relaxed">{selectedNode.riskExplanation}</p>
                   </div>
                 )}
+                
                 {selectedNode.fraudAmount && (
-                  <div className="bg-navy-700/50 rounded-lg p-3 border border-white/5">
-                    <p className="text-caption text-gray-500 mb-1">Fraud Amount</p>
-                    <p className="text-body font-semibold text-danger">{selectedNode.fraudAmount}</p>
+                  <div className="bg-navy-800 rounded-lg p-3 border border-white/5">
+                    <p className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider mb-1">Estimated Financial Impact</p>
+                    <p className="text-body-lg font-bold text-danger">{selectedNode.fraudAmount}</p>
                   </div>
                 )}
 
-                {/* Cluster Info */}
-                <div className="border-t border-white/[0.06] pt-4 mt-4">
-                  <h4 className="text-body font-semibold text-white mb-3">Cluster: {selectedCluster.name}</h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-body">
-                      <span className="text-gray-400">Risk Score</span>
-                      <span className={`font-semibold ${selectedCluster.riskScore >= 80 ? 'text-danger' : selectedCluster.riskScore >= 60 ? 'text-warning' : 'text-accent'}`}>
-                        {selectedCluster.riskScore}/100
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-body">
-                      <span className="text-gray-400">Transactions</span>
-                      <span className="text-white">{selectedCluster.totalTransactions.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between text-body">
-                      <span className="text-gray-400">Est. Loss</span>
-                      <span className="text-danger font-semibold">{selectedCluster.estimatedLoss}</span>
-                    </div>
-                    <div className="flex justify-between text-body">
-                      <span className="text-gray-400">Active Members</span>
-                      <span className="text-white">{selectedCluster.activeMembers}</span>
-                    </div>
+                {/* Actionable SOP */}
+                {(selectedNode.risk === 'critical' || selectedNode.risk === 'high') && (
+                  <div className="glass-card p-4 border border-danger/30 bg-danger/5 mt-2">
+                      <h3 className="text-caption font-semibold text-danger uppercase tracking-wider mb-2 flex items-center gap-2">
+                          <AlertTriangle className="w-3.5 h-3.5" /> Recommended SOP
+                      </h3>
+                      <ul className="space-y-1.5 text-caption text-gray-200">
+                          <li className="flex items-start gap-2"><span className="text-danger mt-0.5">•</span> Freeze associated accounts immediately via INSACOG integration.</li>
+                          <li className="flex items-start gap-2"><span className="text-danger mt-0.5">•</span> Extract all connected nodes (1-hop radius) for proactive monitoring.</li>
+                      </ul>
                   </div>
+                )}
+              </div>
+
+              {/* Cluster Info */}
+              <div className="border-t border-white/[0.06] pt-5 mt-5">
+                <h4 className="text-caption font-semibold text-gray-400 uppercase tracking-wider mb-4">Network Cluster Topology</h4>
+                <div className="bg-navy-800 rounded-xl p-4 border border-white/5 space-y-3">
+                    <p className="text-body font-semibold text-white mb-2">{selectedCluster.name}</p>
+                    <div className="grid grid-cols-2 gap-y-3 gap-x-4">
+                        <div>
+                            <span className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider block">Aggregate Risk</span>
+                            <span className={`text-body font-semibold ${selectedCluster.riskScore >= 80 ? 'text-danger' : selectedCluster.riskScore >= 60 ? 'text-warning' : 'text-accent'}`}>
+                                {selectedCluster.riskScore}/100
+                            </span>
+                        </div>
+                        <div>
+                            <span className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider block">Est. Exposure</span>
+                            <span className="text-body font-semibold text-danger">{selectedCluster.estimatedLoss}</span>
+                        </div>
+                        <div>
+                            <span className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider block">Active Entities</span>
+                            <span className="text-body font-semibold text-white">{selectedCluster.activeMembers}</span>
+                        </div>
+                        <div>
+                            <span className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider block">Tx Volume</span>
+                            <span className="text-body font-semibold text-white">{selectedCluster.totalTransactions.toLocaleString()}</span>
+                        </div>
+                    </div>
                 </div>
               </div>
             </div>

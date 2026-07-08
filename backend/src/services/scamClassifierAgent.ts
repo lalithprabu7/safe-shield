@@ -132,6 +132,20 @@ const VOICE_TRAINING_DATA: TrainingData[] = [
   { phrase: 'safe account provided by', weight: 22, category: 'Safe Account Demand' },
   { phrase: 'do not disconnect this call', weight: 18, category: 'Coercion & Control' },
   { phrase: 'central bureau of investigation', weight: 16, category: 'Authority Impersonation' },
+
+  // Investment / Crypto Scams (Voice)
+  { phrase: 'guaranteed returns', weight: 16, category: 'Investment Scam' },
+  { phrase: 'double your money', weight: 18, category: 'Investment Scam' },
+  { phrase: 'risk free investment', weight: 16, category: 'Investment Scam' },
+  { phrase: 'deposit to start earning', weight: 14, category: 'Investment Scam' },
+  { phrase: 'cryptocurrency investment', weight: 10, category: 'Investment Scam' },
+  { phrase: 'bitcoin opportunity', weight: 12, category: 'Investment Scam' },
+
+  // Lottery / Prize Scams (Voice)
+  { phrase: 'you have won', weight: 14, category: 'Lottery Scam' },
+  { phrase: 'lottery winner', weight: 18, category: 'Lottery Scam' },
+  { phrase: 'pay tax to claim', weight: 16, category: 'Lottery Scam' },
+  { phrase: 'claim your prize', weight: 16, category: 'Lottery Scam' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -160,19 +174,25 @@ export async function initVoiceNLPModel() {
       
       for (const t of VOICE_TRAINING_DATA) {
         // Boost weight
-        const iterations = Math.ceil(t.weight / 5);
+        const iterations = Math.ceil(t.weight / 5) * 10;
         for (let i = 0; i < iterations; i++) {
           voiceClassifier.addDocument(t.phrase, t.category);
         }
       }
       
-      // Safe examples
-      voiceClassifier.addDocument('hello how are you', 'Safe');
-      voiceClassifier.addDocument('can we meet tomorrow', 'Safe');
-      voiceClassifier.addDocument('i transferred the money for the rent', 'Safe');
-      voiceClassifier.addDocument('did you get my email', 'Safe');
-      voiceClassifier.addDocument('happy birthday', 'Safe');
-      voiceClassifier.addDocument('the meeting is scheduled for 5pm', 'Safe');
+      // Safe examples (looped to balance boosted scam phrases)
+      const safeExamples = [
+        'hello how are you', 'can we meet tomorrow', 'i transferred the money for the rent',
+        'did you get my email', 'happy birthday', 'the meeting is scheduled for 5pm',
+        'what did you have for lunch', 'call me back when you are free', 'the package has been delivered',
+        'mom are you at home', 'where are we going for dinner', 'good morning have a great day',
+        'i will send the document shortly', 'thanks for the update', 'let me know if you need help'
+      ];
+      for (const safe of safeExamples) {
+        for (let i = 0; i < 50; i++) {
+          voiceClassifier.addDocument(safe, 'Safe');
+        }
+      }
       
       voiceClassifier.train();
       
@@ -249,11 +269,43 @@ export async function classifyTranscript(text: string): Promise<ClassificationRe
   let scamType = topClassification.label;
   let confidence = 0;
 
+  // -------------------------------------------------------------
+  // False Positive Mitigation Heuristic
+  // -------------------------------------------------------------
+  const normalizedWords = normalized.split(/\s+/);
+  let maxPhraseMatch = 0;
+  
+  const isSignificant = (w: string) => {
+    const importantShortWords = ['cbi', 'otp', 'pin', 'cvv', 'fir', 'rbi', 'nia', 'kyc', 'job', 'pay', 'tax', 'sms', 'link', 'app', 'qr', 'card', 'bank', 'win', 'won', 'ed'];
+    if (importantShortWords.includes(w)) return true;
+    const stopWords = ['from', 'your', 'with', 'this', 'that', 'have', 'will', 'been', 'what', 'when', 'into', 'they', 'them', 'then', 'than', 'tell'];
+    if (stopWords.includes(w)) return false;
+    return w.length >= 4;
+  };
+
+  for (const t of VOICE_TRAINING_DATA) {
+    const phraseLower = t.phrase.toLowerCase();
+    if (normalized.includes(phraseLower)) {
+      maxPhraseMatch = 1.0;
+      break;
+    }
+    const phraseWords = phraseLower.split(' ');
+    const matchedWords = phraseWords.filter(w => isSignificant(w) && normalizedWords.includes(w));
+    if (phraseWords.length > 0 && matchedWords.length > 0) {
+      maxPhraseMatch = Math.max(maxPhraseMatch, matchedWords.length / phraseWords.length);
+    }
+  }
+
   if (scamType !== 'Safe') {
-    if (secondClassification && topClassification.value > 0) {
-      confidence = Math.min(99, Math.round((topClassification.value / (topClassification.value + secondClassification.value)) * 100));
+    if (maxPhraseMatch < 0.3) {
+      scamType = 'Safe';
+      confidence = 5;
     } else {
-      confidence = 85;
+      if (secondClassification && topClassification.value > 0) {
+        confidence = Math.min(99, Math.round((topClassification.value / (topClassification.value + secondClassification.value)) * 100));
+      } else {
+        confidence = 85;
+      }
     }
   } else {
     confidence = 5;
